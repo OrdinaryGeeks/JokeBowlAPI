@@ -54,8 +54,14 @@ namespace JokeAIAPI.Controllers
                 }
                 return ValidationProblem();
             }
-
-            await _userManager.AddToRoleAsync(user, "Member");
+            try
+            {
+                await _userManager.AddToRoleAsync(user, "Member");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             return StatusCode(201);
         }

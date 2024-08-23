@@ -146,28 +146,6 @@ namespace JokeAIAPI.Controllers
       
 
 
-        [HttpPost]
-        [Route("switchVote")]
-        public async Task<ActionResult<Joke>> SwitchDownVote(JokeDownVote jokeDownVote, string voteResult)
-        {
-            _context.JokeDownVote.Where(p=>p.JokeDownVoteID == jokeDownVote.JokeDownVoteID).ExecuteDelete();
-            Joke? joke = _context.Joke.Find(jokeDownVote.JokeID);
-            if (joke != null)
-            {
-                joke.Score++;
-                if(voteResult=="Good")
-                joke.Score++;
-                
-
-                
-                _context.Entry(joke).State = EntityState.Modified;
-            }
-
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("SwitchDownVote", joke);
-
-
-        }
         // DELETE: api/JokeDownVotes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJokeDownVote(int id)

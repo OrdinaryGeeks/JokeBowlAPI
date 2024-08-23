@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("JokeAIConnectionString")));
 
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<DBContext>();
+
 // Add services to the container.
 
 
@@ -56,7 +58,7 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 
-app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:5173", "http://www.geeksthatsmile.com").AllowCredentials());
+app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000","http://localhost:5173","https://localhost:3000", "http://www.geeksthatsmile.com").AllowCredentials());
 
 app.UseHttpsRedirection();
 
